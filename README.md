@@ -23,6 +23,10 @@ You can find an [upgrade guide](UPGRADE.md) to quickly upgrade your application 
 Zfecommerce only officially supports installation through Composer. For Composer documentation, please refer to
 [getcomposer.org](http://getcomposer.org/).
 
+before installing the module itself install the requirements in zend framework root directory by issuing following commands :
+
+composer require zf-commons/zfc-rbac:~2.4
+
 Install the module:
 
 ```sh
