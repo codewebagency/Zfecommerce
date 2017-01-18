@@ -27,7 +27,7 @@ composer require zf-commons/zfc-rbac:~2.4
 Install the module:
 
 ```sh
-Put the downloaded Zip package from here to the module directory of your zend installation .
+Put the downloaded Zip package from here with the file structure Zfecommerce/{ content of module } to the module directory of your zend installation .
 ```
 
 Enable the module by adding `Zfecommerce` key to your `application.config.php` file.
