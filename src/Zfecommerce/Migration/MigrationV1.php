@@ -238,6 +238,24 @@ class MigrationV1 implements MigrationInterface
                 $dbAdapter::QUERY_MODE_EXECUTE
             );
         }
+        // creating user table
+        $result = $dbAdapter->query(
+            "SELECT table_name FROM information_schema.tables WHERE table_schema = 'test' AND table_name = 'user'",
+            $dbAdapter::QUERY_MODE_EXECUTE
+        );
+        $count = $result->count();
+        if($count == 0) {
+            $result = $dbAdapter->query(
+                "create table user(
+                     user_id int unsigned not null auto_increment primary key,
+                     email varchar(200) not null COLLATE utf8_general_ci,
+                     password varchar(45) not null COLLATE utf8_general_ci,
+                     is_active tinyint(1) default 0,
+                     UNIQUE KEY (email)
+                 )engine=innodb COLLATE utf8_general_ci;",
+                $dbAdapter::QUERY_MODE_EXECUTE
+            );
+        }
 
     }
     public function down()

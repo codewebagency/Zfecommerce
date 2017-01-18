@@ -206,6 +206,20 @@ return array(
                         'action'        => 'index',
                     ),
                 ),
+            ],
+            'admin' => [
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/admin[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Zfecommerce\Admin\Controller',
+                        'controller'    => 'Admin',
+                        'action'        => 'index',
+                    ),
+                ),
             ]
         ),
     ),
@@ -236,6 +250,7 @@ return array(
         'invokables' => [
             'Zfecommerce\Controller\Index' => 'Zfecommerce\Controller\IndexController',
             'Zfecommerce\Controller\Install' => 'Zfecommerce\Controller\InstallController',
+            'Zfecommerce\Admin\Controller\Admin' => 'Zfecommerce\Admin\Controller\AdminController',
         ],
         'factories' => [
             'Zfecommerce\Controller\CategoryEntity' => 'Zfecommerce\Controller\Factory\CategoryEntityControllerFactory',
