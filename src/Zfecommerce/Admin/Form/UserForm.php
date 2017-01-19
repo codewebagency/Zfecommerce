@@ -9,7 +9,7 @@ class UserForm extends Form
     public function __construct($name = null)
     {
         // we want to ignore the name passed
-        parent::__construct('user');
+        parent::__construct('user'); // name of the form
 
         $this->add(array(
             'name' => 'user_id',
