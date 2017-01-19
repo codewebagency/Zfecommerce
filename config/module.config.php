@@ -277,7 +277,6 @@ return array(
             'Zfecommerce\Controller\Index' => 'Zfecommerce\Controller\IndexController',
             'Zfecommerce\Controller\Install' => 'Zfecommerce\Controller\InstallController',
             'Zfecommerce\Admin\Controller\Admin' => 'Zfecommerce\Admin\Controller\AdminController',
-            'Zfecommerce\Admin\Controller\Auth' => 'Zfecommerce\Admin\Controller\AuthController',
         ],
         'factories' => [
             'Zfecommerce\Controller\CategoryEntity' => 'Zfecommerce\Controller\Factory\CategoryEntityControllerFactory',
@@ -290,6 +289,7 @@ return array(
             'Zfecommerce\Controller\EavAttributeValueInt' => 'Zfecommerce\Controller\Factory\EavAttributeValueIntControllerFactory',
             'Zfecommerce\Controller\EavAttributeValueText' => 'Zfecommerce\Controller\Factory\EavAttributeValueTextControllerFactory',
             'Zfecommerce\Controller\EavAttributeValueVarchar' => 'Zfecommerce\Controller\Factory\EavAttributeValueVarcharControllerFactory',
+            'Zfecommerce\Admin\Controller\Auth' => 'Zfecommerce\Admin\Controller\Factory\AuthControllerFactory',
         ]
     ],
     'view_manager' => array(

@@ -134,21 +134,20 @@ class Module implements ConfigProviderInterface
                   $resultSetPrototype->setArrayObjectPrototype(new Model\EavAttributeValueVarchar());
                   return new TableGateway('eav_attribute_value_varchar', $dbAdapter, null, $resultSetPrototype);
               },
-              'Admin\Model\MyAuthStorage' => function($container){
-                  return new \Zfecommerce\Admin\Model\MyAuthStorage('zfeC_auth');
+              Admin\Model\MyAuthStorage::class => function($container){
+                  return new Admin\Model\MyAuthStorage('zfeC_auth');
               },
               'AuthService' => function($container) {
                   //My assumption, you've alredy set dbAdapter
                   //and has user table with columns : email and password
                   //that password hashed with md5
-                  $dbAdapter           = $container->get('Zend\Db\Adapter\Adapter');
+                  $dbAdapter           = $container->get(AdapterInterface::class);
                   $dbTableAuthAdapter  = new DbTableAuthAdapter($dbAdapter,
                       'user','email','password', 'MD5(?)');
 
                   $authService = new AuthenticationService();
                   $authService->setAdapter($dbTableAuthAdapter);
-                  $authService->setStorage($container->get('\Zfecommerce\Admin\Model\MyAuthStorage'));
-
+                  $authService->setStorage($container->get(Admin\Model\MyAuthStorage::class));
                   return $authService;
               },
           ]

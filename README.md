@@ -22,6 +22,7 @@ You can find an [upgrade guide](UPGRADE.md) to quickly upgrade your application 
 
 before installing the module itself install the requirements in zend framework root directory by issuing following commands :
 
+composer require doctrine/common:~2.1
 composer require zf-commons/zfc-rbac:~2.4
 
 Install the module:

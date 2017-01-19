@@ -2,6 +2,7 @@
 
 namespace Zfecommerce\Admin\Controller;
 
+use Zend\Authentication\AuthenticationServiceInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\View\Model\ViewModel;
@@ -14,13 +15,13 @@ class AuthController extends AbstractActionController
     protected $storage;
     protected $authservice;
 
+    public function __construct(AuthenticationServiceInterface $authService)
+    {
+        $this->authservice = $authService;
+    }
+
     public function getAuthService()
     {
-        if (!$this->authservice) {
-            $this->authservice = $this->getServiceLocator()
-                ->get('AuthService');
-        }
-
         return $this->authservice;
     }
 
@@ -54,10 +55,13 @@ class AuthController extends AbstractActionController
 
         $form = $this->getForm();
 
-        return array(
+        $data = array(
             'form' => $form,
             'messages' => $this->flashmessenger()->getMessages()
         );
+        $view = new ViewModel($data);
+        $view->setTemplate('zfecommerce/admin/auth/login');
+        return $view;
     }
 
     public function authenticateAction()
