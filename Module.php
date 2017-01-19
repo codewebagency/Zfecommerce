@@ -147,7 +147,7 @@ class Module implements ConfigProviderInterface
 
                   $authService = new AuthenticationService();
                   $authService->setAdapter($dbTableAuthAdapter);
-                  $authService->setStorage($container->get('Admin\Model\MyAuthStorage'));
+                  $authService->setStorage($container->get('\Zfecommerce\Admin\Model\MyAuthStorage'));
 
                   return $authService;
               },
