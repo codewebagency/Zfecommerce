@@ -220,7 +220,33 @@ return array(
                         'action'        => 'index',
                     ),
                 ),
-            ]
+            ],
+            'login' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/auth',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Zfecommerce\Admin\Controller',
+                        'controller'    => 'Auth',
+                        'action'        => 'login',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'process' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:action]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -251,6 +277,7 @@ return array(
             'Zfecommerce\Controller\Index' => 'Zfecommerce\Controller\IndexController',
             'Zfecommerce\Controller\Install' => 'Zfecommerce\Controller\InstallController',
             'Zfecommerce\Admin\Controller\Admin' => 'Zfecommerce\Admin\Controller\AdminController',
+            'Zfecommerce\Admin\Controller\Auth' => 'Zfecommerce\Admin\Controller\AuthController',
         ],
         'factories' => [
             'Zfecommerce\Controller\CategoryEntity' => 'Zfecommerce\Controller\Factory\CategoryEntityControllerFactory',
