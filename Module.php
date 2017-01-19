@@ -8,6 +8,9 @@ use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\Authentication\Storage;
+use Zend\Authentication\AuthenticationService;
+use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as DbTableAuthAdapter;
 
 class Module implements ConfigProviderInterface
 {
@@ -130,6 +133,23 @@ class Module implements ConfigProviderInterface
                   $resultSetPrototype = new ResultSet();
                   $resultSetPrototype->setArrayObjectPrototype(new Model\EavAttributeValueVarchar());
                   return new TableGateway('eav_attribute_value_varchar', $dbAdapter, null, $resultSetPrototype);
+              },
+              'Admin\Model\MyAuthStorage' => function($container){
+                  return new \Zfecommerce\Admin\Model\MyAuthStorage('zfeC_auth');
+              },
+              'AuthService' => function($container) {
+                  //My assumption, you've alredy set dbAdapter
+                  //and has user table with columns : email and password
+                  //that password hashed with md5
+                  $dbAdapter           = $container->get('Zend\Db\Adapter\Adapter');
+                  $dbTableAuthAdapter  = new DbTableAuthAdapter($dbAdapter,
+                      'user','email','password', 'MD5(?)');
+
+                  $authService = new AuthenticationService();
+                  $authService->setAdapter($dbTableAuthAdapter);
+                  $authService->setStorage($container->get('Admin\Model\MyAuthStorage'));
+
+                  return $authService;
               },
           ]
         ];
