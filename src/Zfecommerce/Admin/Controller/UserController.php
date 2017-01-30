@@ -7,6 +7,7 @@ use Zend\View\Model\ViewModel;
 use Zend\Authentication\AuthenticationServiceInterface;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zfecommerce\Admin\Model\User;
+use Zfecommerce\Admin\Model\UserTable;
 
 class UserController extends AbstractActionController
 {
@@ -15,9 +16,10 @@ class UserController extends AbstractActionController
     private $table;
     protected $authservice;
 
-    public function __construct(AuthenticationServiceInterface $authService)
+    public function __construct(UserTable $table,AuthenticationServiceInterface $authService)
     {
         $this->authservice = $authService;
+        $this->table = $table;
     }
 
     public function getAuthService()
