@@ -5,7 +5,6 @@ namespace Zfecommerce\Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\AuthenticationServiceInterface;
-use Zend\Form\Annotation\AnnotationBuilder;
 use Zfecommerce\Admin\Model\User;
 use Zfecommerce\Admin\Model\UserTable;
 use Zfecommerce\Admin\Form\UserForm;
@@ -28,21 +27,10 @@ class UserController extends AbstractActionController
         return $this->authservice;
     }
 
-    public function getForm()
-    {
-        if (!$this->form) {
-            $user = new User();
-            $builder = new AnnotationBuilder();
-            $this->form = $builder->createForm($user);
-        }
-
-        return $this->form;
-    }
-
     public function indexAction()
     {
         if (! $this->authservice->hasIdentity()){
-            return $this->redirect()->toRoute('login');
+            return $this->redirect()->toUrl('user/login');
         }
 
         return new ViewModel();
@@ -74,5 +62,13 @@ class UserController extends AbstractActionController
         $view = new ViewModel($data);
         $view->setTemplate('zfecommerce/admin/user/register');
         return $view;
+    }
+
+    public function loginAction(){
+        //if already login, redirect to success page
+        if ($this->getAuthService()->hasIdentity()) {
+            return $this->redirect()->toRoute('success');
+        }
+
     }
 }
