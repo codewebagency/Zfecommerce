@@ -8,6 +8,7 @@ use Zend\Authentication\AuthenticationServiceInterface;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zfecommerce\Admin\Model\User;
 use Zfecommerce\Admin\Model\UserTable;
+use Zfecommerce\Admin\Form\UserForm;
 
 class UserController extends AbstractActionController
 {
@@ -53,23 +54,25 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('success');
         }
         $user = new User();
-        $form = $this->getForm();
+        $form = new UserForm();
+        $form->get('submit')->setValue('Register');
         $request = $this->getRequest();
+
         if ($request->isPost()) {
-            $form->bind($user);
+            $form->setInputFilter($user->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                print_r($form->getData());
+                $user->exchangeArray($form->getData());
+                $this->table->saveUser($user);
+                // Redirect to list of users
+                return $this->redirect()->toRoute('user');
             }
         }
-        else {
-            $data = array(
-                'form' => $form,
-                'messages' => $this->flashmessenger()->getMessages()
-            );
-            $view = new ViewModel($data);
-            $view->setTemplate('zfecommerce/admin/user/register');
-            return $view;
-        }
+        $data = array(
+           'form' => $form,
+        );
+        $view = new ViewModel($data);
+        $view->setTemplate('zfecommerce/admin/user/register');
+        return $view;
     }
 }

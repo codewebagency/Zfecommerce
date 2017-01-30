@@ -24,9 +24,16 @@ class UserForm extends Form
         ));
         $this->add(array(
             'name' => 'password',
-            'type' => 'Text',
+            'type' => 'Password',
             'options' => array(
                 'label' => 'Password',
+            ),
+        ));
+        $this->add(array(
+            'name' => 'password2',
+            'type' => 'Password',
+            'options' => array(
+                'label' => 'Password Confirmation',
             ),
         ));
         $this->add(array(

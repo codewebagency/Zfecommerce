@@ -14,48 +14,11 @@ use Zend\InputFilter\InputFilterInterface;
 class User implements InputFilterAwareInterface
 {
 
-    /**
-     * @Annotation\Type("Zend\Form\Element\Hidden")
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StripTags"})
-     */
     public $user_id;
-
-    /**
-     * @Annotation\Type("Zend\Form\Element\Text")
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Email:"})
-     */
     public $email;
-
-    /**
-     * @Annotation\Type("Zend\Form\Element\Password")
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Password:"})
-     */
     public $password;
-
-    /**
-     * @Annotation\Type("Zend\Form\Element\Password")
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Password Confirmation:"})
-     */
     public $password2;
-
-    /**
-     * @Annotation\Type("Zend\Form\Element\Hidden")
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StripTags"})
-     */
     public $is_active;
-
-    /**
-     * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Remember Me ?:"})
-     */
     public $rememberme;
 
     /**
@@ -71,6 +34,7 @@ class User implements InputFilterAwareInterface
         $this->user_id     = (isset($data['user_id']))     ? $data['user_id']     : null;
         $this->email = (isset($data['email'])) ? $data['email'] : null;
         $this->password  = (isset($data['password']))  ? md5($data['password'])  : null;
+        $this->password2  = (isset($data['password2']))  ? md5($data['password2'])  : null;
         $this->is_active = (isset($data['is_active'])) ? $data['is_active'] : 0;
     }
 
@@ -86,7 +50,6 @@ class User implements InputFilterAwareInterface
 
             $inputFilter->add(array(
                 'name'     => 'user_id',
-                'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),
@@ -155,7 +118,6 @@ class User implements InputFilterAwareInterface
 
             $inputFilter->add(array(
                 'name'     => 'is_active',
-                'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),
