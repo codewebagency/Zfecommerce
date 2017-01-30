@@ -38,6 +38,14 @@ class User implements InputFilterAwareInterface
     public $password;
 
     /**
+     * @Annotation\Type("Zend\Form\Element\Password")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Password Confirmation:"})
+     */
+    public $password2;
+
+    /**
      * @Annotation\Type("Zend\Form\Element\Hidden")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
@@ -122,13 +130,37 @@ class User implements InputFilterAwareInterface
                 ),
             ));
             $inputFilter->add(array(
+                'name'     => 'password2',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 45,
+                        ),
+                    ),
+                    array(
+                        'name' => 'Identical',
+                        'options' => [
+                            'token' => 'password'
+                        ],
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
                 'name'     => 'is_active',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),
             ));
-            
+
             $this->inputFilter = $inputFilter;
         }
 

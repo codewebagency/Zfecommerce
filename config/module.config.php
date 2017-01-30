@@ -224,7 +224,7 @@ return array(
             'login' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/auth',
+                    'route'    => '/login',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Zfecommerce\Admin\Controller',
                         'controller'    => 'Auth',
@@ -247,6 +247,32 @@ return array(
                     ),
                 ),
             ),
+            'user' => [
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/user',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Zfecommerce\Admin\Controller',
+                        'controller'    => 'User',
+                        'action'        => 'Index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'process' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:action]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ],
         ),
     ),
     'service_manager' => array(
@@ -290,6 +316,7 @@ return array(
             'Zfecommerce\Controller\EavAttributeValueText' => 'Zfecommerce\Controller\Factory\EavAttributeValueTextControllerFactory',
             'Zfecommerce\Controller\EavAttributeValueVarchar' => 'Zfecommerce\Controller\Factory\EavAttributeValueVarcharControllerFactory',
             'Zfecommerce\Admin\Controller\Auth' => 'Zfecommerce\Admin\Controller\Factory\AuthControllerFactory',
+            'Zfecommerce\Admin\Controller\User' => 'Zfecommerce\Admin\Controller\Factory\UserControllerFactory',
         ]
     ],
     'view_manager' => array(
