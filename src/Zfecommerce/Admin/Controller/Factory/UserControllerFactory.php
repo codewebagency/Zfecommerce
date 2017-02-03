@@ -17,14 +17,17 @@ class UserControllerFactory implements FactoryInterface
         try {
             $service = $sm->get('AuthService');
             $model = $sm->get(UserTable::class);
+            $storage = $sm->get('Zfecommerce\Admin\Model\MyAuthStorage');
         } catch(ServiceNotCreatedException $e) {
             $service = null;
             $model = null;
+            $storage = null;
         } catch(ExtensionNotLoadedException $e) {
             $service = null;
             $model = null;
+            $storage = null;
         }
-        $controller = new UserController($model, $service);
+        $controller = new UserController($model, $service, $storage);
         return $controller;
     }
 }

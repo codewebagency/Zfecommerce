@@ -15,6 +15,11 @@ $password = $form->get('password');
 $password->setAttribute('class', 'form-control');
 $password->setAttribute('placeholder', 'Password');
 
+// This provides a default CSS class for the rememberme element:
+$rememberme = $form->get('rememberme');
+$rememberme->setAttribute('class', '');
+$rememberme->setAttribute('placeholder', '');
+
 // This provides CSS classes for the submit button:
 $submit = $form->get('submit');
 $submit->setAttribute('class', 'btn btn-primary');
@@ -38,7 +43,18 @@ echo $this->form()->openTag($form);
         <?= $this->formElementErrors()->render($password, ['class' => 'help-block']) ?>
     </div>
 
-<?php
+    <div>
+        <?= $this->formLabel($rememberme) ?>
+        <?= $this->formElement($rememberme) ?>
+        <?= $this->formElementErrors()->render($rememberme, ['class' => 'help-block']) ?>
+    </div>
+    <?php
+    echo "<ul>";
+    foreach($this->messages as $message) {
+    echo "<li>$message</li>";
+    }
+    echo "</ul>";
 echo $this->formSubmit($submit);
 echo $this->form()->closeTag();
+
 

@@ -222,28 +222,16 @@ return array(
                 ),
             ],
             'user' => [
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/user',
+                    'route'    => '/user[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
                     'defaults' => array(
                         '__NAMESPACE__' => 'Zfecommerce\Admin\Controller',
                         'controller'    => 'User',
-                        'action'        => 'Index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'process' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:action]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
+                        'action'        => 'index',
                     ),
                 ),
             ],
